@@ -1,6 +1,6 @@
 # MidnightCombatLog Configuration
 
-combat-duration-seconds: 15
+combat-duration-seconds: 10
 
 blocked-commands:
   - "spawn"
