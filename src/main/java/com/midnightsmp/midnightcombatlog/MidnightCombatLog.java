@@ -29,16 +29,15 @@ public class MidnightCombatLog extends JavaPlugin implements Listener, CommandEx
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        combatDuration = getConfig().getInt("combat-duration-seconds", 15);
+        combatDuration = getConfig().getInt("combat-duration-seconds", 10);
         blockedCommands = getConfig().getStringList("blocked-commands");
 
         getServer().getPluginManager().registerEvents(this, this);
         getCommand("combattag").setExecutor(this);
 
-        getLogger().info("MidnightCombatLog enabled successfully!");
+        getLogger().info("MidnightCombatLog enabled with 10s combat timer!");
     }
 
-    // --- 1. COMBAT TAG TRIGGER ON PVP ---
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof Player victim)) return;
@@ -76,7 +75,6 @@ public class MidnightCombatLog extends JavaPlugin implements Listener, CommandEx
         return true;
     }
 
-    // --- 2. BLOCK COMMANDS IN COMBAT ---
     @EventHandler
     public void onCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
@@ -90,19 +88,16 @@ public class MidnightCombatLog extends JavaPlugin implements Listener, CommandEx
         }
     }
 
-    // --- 3. PUNISH COMBAT LOGGING ---
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         if (isTagged(player)) {
-            // Instantly kill player to trigger Lifesteal death penalty and drop items
             player.setHealth(0.0);
             Bukkit.broadcastMessage(ChatColor.DARK_RED + "☠️ " + player.getName() + " combat logged and was slain!");
             combatTags.remove(player.getUniqueId());
         }
     }
 
-    // --- 4. CHECK COMBAT STATUS COMMAND ---
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player player) {
