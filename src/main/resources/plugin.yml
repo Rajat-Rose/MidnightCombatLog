@@ -1,0 +1,8 @@
+name: MidnightCombatLog
+version: 1.0
+main: com.midnightsmp.midnightcombatlog.MidnightCombatLog
+api-version: 1.20
+commands:
+  combattag:
+    description: Check your current combat tag status
+    aliases: [ct]
