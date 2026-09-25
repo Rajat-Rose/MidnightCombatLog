@@ -1,0 +1,12 @@
+# MidnightCombatLog Configuration
+
+combat-duration-seconds: 15
+
+blocked-commands:
+  - "spawn"
+  - "hub"
+  - "lobby"
+  - "rtp"
+  - "tpa"
+  - "tpaccept"
+  - "home"
